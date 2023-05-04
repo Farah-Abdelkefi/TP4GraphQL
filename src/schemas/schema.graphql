@@ -12,14 +12,14 @@ type CV implements IdentifiableById {
   name: String!
   age: String!
   job: String!
-  skills: [Skill]!
+  skills: [Skill!]
   user: User!
 }
 
 type Skill implements IdentifiableById {
   id: Int!
   designation: String!
-  cvs: [CV]!
+  cvs: [CV!]
 }
 
 type User implements IdentifiableById {

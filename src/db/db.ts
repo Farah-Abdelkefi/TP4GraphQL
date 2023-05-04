@@ -12,14 +12,13 @@ interface CV extends IdentifiableById {
 
 interface Skill extends IdentifiableById {
   designation: string;
-  cvs: CV[];
-}
+  }
 
 interface User extends IdentifiableById {
   name: string;
   email: string;
   role: Role;
-  cvs: CV[];
+
 }
 
 enum Role {
@@ -28,10 +27,10 @@ enum Role {
 }
 
 const skills: Skill[] = [
-  { id: 1, designation: "Nest", cvs: [] },
-  { id: 2, designation: "Java ", cvs: [] },
-  { id: 3, designation: "GraphQL", cvs: [] },
-  { id: 4, designation: "java script", cvs: [] },
+  { id: 1, designation: "Nest"},
+  { id: 2, designation: "Java "},
+  { id: 3, designation: "GraphQL" },
+  { id: 4, designation: "java script"},
 ];
 
 const users: User[] = [
@@ -40,21 +39,21 @@ const users: User[] = [
     name: "Farah abdelkefi",
     email: "farah.abdelkefi@gmail.com",
     role: Role.ADMIN,
-    cvs: [],
+    
   },
   {
     id: 2,
     name: "Nour Ben Hajla ",
     email: "Nour.Benhajla@gmail.com",
     role: Role.USER,
-    cvs: [],
+   
   },
   {
     id: 3,
     name: "Intidhar Ben Hnia",
     email: "intishar.benhnia@gmail.com",
     role: Role.USER,
-    cvs: []
+   
   },
 ];
 
@@ -94,15 +93,6 @@ const cvs: CV[] = [
 
 ];
 
-skills[0].cvs.push(cvs[0]);
-skills[0].cvs.push(cvs[2]);
-skills[1].cvs.push(cvs[1]);
-skills[2].cvs.push(cvs[2]);
-skills[3].cvs.push(cvs[3]);
-users[0].cvs.push(cvs[0]);
-users[1].cvs.push(cvs[1]);
-users[2].cvs.push(cvs[2]);
-users[2].cvs.push(cvs[3]);
 
 export const db = {
   skills,

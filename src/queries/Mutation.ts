@@ -1,12 +1,14 @@
+import { GraphQLError } from "graphql";
 
 export const Mutation = {
   createCV: (_parent:never, { input }:any, { pubSub, db }) => {
     const { name, age, job, skillIds, userId } = input;
     const id = db.cvs.length + 1;
     const skills = db.skills.filter((skill) => skillIds.includes(skill.id));
+    console.log(skills);
     const user = db.users.find((user) => user.id === userId);
     if (!user) {
-      throw new Error(`User with ID ${userId} not found.`);
+      throw new GraphQLError (`user d'id ${userId} n'existe pas`);
     }
 
     const newCV = {
@@ -26,7 +28,7 @@ export const Mutation = {
     const {  skillIds, userId } = input;
     const cvIndex = db.cvs.findIndex((cv) => cv.id === id);
     if (cvIndex === -1) {
-      throw new Error(`CV with ID ${id} not found.`);
+      throw new GraphQLError(` cv d'id ${id} n'existe pas.`);
     }
     let skills = []
     if ( skillIds )
@@ -38,13 +40,13 @@ export const Mutation = {
       {
         const user = db.users.find((user) => user.id === userId);
       if (!user) {
-      throw new Error(`User with ID ${userId} not found.`);
+      throw new GraphQLError(`user d'id ${userId} n'existe pas.`);
       }
     }
     else {
       const cv = db.cvs.find((cv) => cv.id === id);
       if(!cv){
-        throw new Error(` cv d'id ${id} n'existe pas `);
+        throw new GraphQLError(` cv d'id ${id} n'existe pas `);
       }else {
         for(let key in input){
           if(key != skillIds)
@@ -62,7 +64,7 @@ export const Mutation = {
   deleteCV: (_parent: never, { id }: { id: number }, { db, pubSub }) => {
     const index = db.cvs.findIndex((cv) => cv.id === id);
     if (index === -1) {
-      throw new Error(`CV with ID ${id} not found`);
+      throw new GraphQLError(`CV with ID ${id} not found`);
     }
     const deletedCV = db.cvs.splice(index, 1)[0];
 
