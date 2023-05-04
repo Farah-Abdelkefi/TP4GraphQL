@@ -9,6 +9,7 @@ export const  Skill= {
         return cv_found;
     },
 }
-function include (array ,attribut,value){
+
+export function include (array ,attribut = "",value){
     return array.some((element) => element[attribut] == value );
 }

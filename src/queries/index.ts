@@ -1,6 +1,5 @@
 import { GraphQLError } from "graphql";
 
-
 export const Query = {
     allCVs: (_, __, { db }) => {
 

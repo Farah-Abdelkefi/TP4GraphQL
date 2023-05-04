@@ -1,5 +1,6 @@
 import { GraphQLError } from "graphql";
 
+
 export const Mutation = {
   createCV: (_parent:never, { input }:any, { pubSub, db }) => {
     const { name, age, job, skillIds, userId } = input;
@@ -30,10 +31,17 @@ export const Mutation = {
     if (cvIndex === -1) {
       throw new GraphQLError(` cv d'id ${id} n'existe pas.`);
     }
-    let skills = []
+    let cv = db.cvs[cvIndex];
+    console.log("cv ",cv);
+
+    let newSkills =[]
     if ( skillIds )
     { 
-       skills = db.skills.filter((skill) => skillIds.includes(skill.id));
+      newSkills = db.skills.filter((skill) => skillIds.includes(skill.id));
+      console.log("ss",newSkills);
+      cv.skills = newSkills;
+       //cv;skills = newSkills ;
+       //console.log("ss2",cv[]);
     }
       
     if ( userId)
@@ -42,25 +50,21 @@ export const Mutation = {
       if (!user) {
       throw new GraphQLError(`user d'id ${userId} n'existe pas.`);
       }
+      else {
+        cv[user] = user ;
+      }
     }
-    else {
-      const cv = db.cvs.find((cv) => cv.id === id);
-      if(!cv){
-        throw new GraphQLError(` cv d'id ${id} n'existe pas `);
-      }else {
-        for(let key in input){
-          if(key != skillIds)
-            cv[key] = input[key];
-          else
-            cv.skills = skills; 
-        }
+    console.log("ss5",newSkills);
+    console.log("ss4",cv.skills);
+    for(let key in input){
+      if( key != skillIds && key != userId )
+        cv[key] = input[key];
 
-
+    }
+    console.log("ss3",cv.skills);
     pubSub.publish('CVUpdates', cv );
     return cv;
-  }
-}
-},
+  },
   deleteCV: (_parent: never, { id }: { id: number }, { db, pubSub }) => {
     const index = db.cvs.findIndex((cv) => cv.id === id);
     if (index === -1) {
